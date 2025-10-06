@@ -1,0 +1,98 @@
+ToR switch VLAN Configurator Python Script
+============================================
+
+### Purpose ###
+This script is used to create VLAN(s) on multiple Cisco ToR switch nodes to ensure consistency of VLAN configuration.
+
+### Essential files in working directory ###
+1. "vlan_configurator.py"
+2. "device_hostname.txt"
+3. "vlan_config.txt"
+
+### Required Packages ###
+1. Recommend to create virtual environment in your working directory. Then activate the venv and install packages.
+
+  python3 -m venv net-env
+  source net-env/bin/activate
+  
+2. Install netmiko package
+
+  pip install netmiko
+  
+3. Verify require package has been installed
+
+### Pre-conditions for script use ###
+1. SSH access enabled on all Cisco nodes.
+2. User must have a working credential to access the device (username & password).
+3. The VLAN configuration commands to execute has been prepared (e.g., create VLANs)
+
+### Running the Script ###
+1. Activate python virtual environment on your working directory
+
+  source net-env/bin/activate
+
+2. Run the script
+  
+  python3 vlan_configurator.py
+  
+3. Once done running script, de-activate pythone venv
+
+  deactivate
+
+
+### Sample Run ###
+
+(net-env) ruvasb@aklab:~/vlan_configurator$ python3 vlan_configurator_smart.py
+Enter SSH username: cisco
+Enter SSH password:
+
+?? Connecting to 10.140.18.182 ...
+? Connected to t-labsw-r501 (10.140.18.182)
+? Creating VLAN 3901 on t-labsw-r501
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+t-labsw-r501(config)#vlan 3901
+t-labsw-r501(config-vlan)#name TEST_VLAN_A
+t-labsw-r501(config-vlan)#end
+t-labsw-r501#
+? Creating VLAN 3902 on t-labsw-r501
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+t-labsw-r501(config)#vlan 3902
+t-labsw-r501(config-vlan)#name TEST_VLAN_B
+t-labsw-r501(config-vlan)#end
+t-labsw-r501#
+? Creating VLAN 3903 on t-labsw-r501
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+t-labsw-r501(config)#vlan 3903
+t-labsw-r501(config-vlan)#name TEST_VLAN_C
+t-labsw-r501(config-vlan)#end
+t-labsw-r501#
+?? Config saved on t-labsw-r501
+
+
+?? Connecting to 10.140.18.183 ...
+? Failed to configure 10.140.18.183: TCP connection to device failed.
+
+Common causes of this problem are:
+1. Incorrect hostname or IP address.
+2. Wrong TCP port.
+3. Intermediate firewall blocking access.
+
+Device settings: cisco_ios 10.140.18.183:22
+
+
+
+?? Connecting to 10.140.18.184 ...
+? Connected to t-labsw-r503 (10.140.18.184)
+? VLAN 3901 already exists on t-labsw-r503, skipping.
+? VLAN 3902 already exists on t-labsw-r503, skipping.
+? Creating VLAN 3903 on t-labsw-r503
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+t-labsw-r503(config)#vlan 3903
+t-labsw-r503(config-vlan)#name TEST_VLAN_C
+t-labsw-r503(config-vlan)#end
+t-labsw-r503#
+?? Config saved on t-labsw-r503

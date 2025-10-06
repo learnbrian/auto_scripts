@@ -2,7 +2,11 @@ from netmiko import ConnectHandler
 from getpass import getpass
 import re
 
-def load_device_hostnames(file_path="device_hostnames.txt"):
+#def load_device_ips(file_path="device_ips.txt"):
+#    with open(file_path, "r") as file:
+#        return [line.strip() for line in file if line.strip() and not line.startswith("#")]
+
+def load_device_hostnames(file_path="dev_hostnames.txt"):
     with open(file_path, "r") as file:
         return [line.strip() for line in file if line.strip() and not line.startswith("#")]
 

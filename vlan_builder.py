@@ -2,11 +2,7 @@ from netmiko import ConnectHandler
 from getpass import getpass
 import re
 
-#def load_device_ips(file_path="device_ips.txt"):
-#    with open(file_path, "r") as file:
-#        return [line.strip() for line in file if line.strip() and not line.startswith("#")]
-
-def load_device_hostnames(file_path="dev_hostnames.txt"):
+def load_device_hostnames(file_path="device_hostnames.txt"):
     with open(file_path, "r") as file:
         return [line.strip() for line in file if line.strip() and not line.startswith("#")]
 
@@ -63,23 +59,23 @@ def configure_vlans_on_devices():
 
             existing_vlans = get_existing_vlans(net_connect)
 
-        for vlan_block in vlan_blocks:
-            vlan_id = vlan_block[0].split()[1]
-            if vlan_id in existing_vlans:
+            for vlan_block in vlan_blocks:
+              vlan_id = vlan_block[0].split()[1]
+              if vlan_id in existing_vlans:
                 print(f"? VLAN {vlan_id} already exists on {hostname}, skipping.")
                 continue
 
-            print(f"? Creating VLAN {vlan_id} on {hostname}")
-            output = net_connect.send_config_set(vlan_block)
-            print(output)
+              print(f"? Creating VLAN {vlan_id} on {hostname}")
+              output = net_connect.send_config_set(vlan_block)
+              print(output)
 
-    net_connect.save_config()
-    net_connect.disconnect()
-    print(f"?? Config saved on {hostname}\n")
-    print(f"?? Logging out of {host}\n")
+            net_connect.save_config()
+            net_connect.disconnect()
+            print(f"?? Config saved on {hostname}\n")
+            print(f"?? Logging out of {host}\n")
 
-except Exception as e:
-print(f"? Failed to configure {host}: {e}")
+        except Exception as e:
+          print(f"? Failed to configure {host}: {e}")
 
 if __name__ == "__main__":
     configure_vlans_on_devices()
